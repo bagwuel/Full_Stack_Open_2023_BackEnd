@@ -1,6 +1,5 @@
 const express = require('express')
 const morgan = require('morgan')
-const { json } = require('stream/consumers')
 const cors = require('cors')
 
 let persons = [
