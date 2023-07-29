@@ -1,11 +1,12 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-underscore-dangle */
 require('dotenv').config()
 const mongoose = require('mongoose')
 
-
 mongoose.set('strictQuery', false)
 mongoose.connect(process.env.MONGODB_URI)
-.then(result => console.log('connected to data base'))
-.catch(error => {console.log('failed to connect to database')})
+    .then(() => console.log('connected to data base'))
+    .catch(() => console.log('failed to connect to database'))
 
 const personSchema = new mongoose.Schema({
     name: {
@@ -15,10 +16,10 @@ const personSchema = new mongoose.Schema({
     number: {
         type: String,
         validate: {
-            validator: function(v) {
+            validator(v) {
                 return /^(\d{2,3})-\d*$/.test(v)
             },
-            message: props => `${props.value} is not a valid phone number!`
+            message: (props) => `${props.value} is not a valid phone number!`,
         },
     },
 })
@@ -28,7 +29,7 @@ personSchema.set('toJSON', {
         returnedObject.id = returnedObject._id.toString()
         delete returnedObject._id
         delete returnedObject.__v
-    }
+    },
 })
 
 module.exports = mongoose.model('Person', personSchema)
